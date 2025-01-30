@@ -4,13 +4,11 @@
 
 package com.mycompany.restaurante;
 
-/**
- *
- * @author josepino
- */
+import vista.CrearIngrediente;
+
 public class Restaurante {
 
     public static void main(String[] args) {
-      
+        
     }
 }

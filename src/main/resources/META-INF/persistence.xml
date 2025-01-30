@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="3.1" xmlns="http://java.sun.com/xml/ns/persistence">
+  <persistence-unit name="persistenciaPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>logica.Receta</class>
+    <class>logica.Combo</class>
+    <class>logica.RecetaDetalle</class>
+    <class>logica.StockIngredientes</class>
+    <class>logica.StockProducto</class>
+    <class>logica.Ingredientes</class>
+    <class>logica.UnidadMedida_1</class>
+    <class>logica.Producto</class>
+    <class>logica.ComboDetalle</class>
+    <class>logica.UnidadMedida</class>
+    <properties>
+      <!-- Configuración de conexión a MySQL -->
+      <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+      <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/RESTURANTE?serverTimezone=UTC"/>
+      <property name="jakarta.persistence.jdbc.user" value="root"/>
+      <property name="jakarta.persistence.jdbc.password" value="Kristoff_Mora26123009"/>
+      <!-- Para que cree las tablas automáticamente -->
+      <property name="jakarta.persistence.schema-generation.database.action" value="update"/>
+    </properties>
+  </persistence-unit>
+</persistence>
