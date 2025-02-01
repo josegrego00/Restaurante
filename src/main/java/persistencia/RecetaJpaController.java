@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import logica.Receta;
 import persistencia.exceptions.IllegalOrphanException;
 import persistencia.exceptions.NonexistentEntityException;
@@ -28,6 +29,10 @@ public class RecetaJpaController implements Serializable {
         this.emf = emf;
     }
     private EntityManagerFactory emf = null;
+
+    RecetaJpaController() {
+       this.emf=Persistence.createEntityManagerFactory("persistenciaPU");
+    }
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
