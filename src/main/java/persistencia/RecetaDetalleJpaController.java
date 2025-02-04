@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import logica.Ingredientes;
@@ -26,6 +27,11 @@ public class RecetaDetalleJpaController implements Serializable {
     public RecetaDetalleJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
+
+    public RecetaDetalleJpaController() {
+        this.emf = Persistence.createEntityManagerFactory("persistenciaPU");
+    }
+
     private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
@@ -192,5 +198,5 @@ public class RecetaDetalleJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }

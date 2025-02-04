@@ -56,10 +56,11 @@ public class RecetaDetalle implements Serializable {
         this.id = id;
     }
 
-    public RecetaDetalle(Integer id, double cantidadReceta, double precioCorrespondiente) {
-        this.id = id;
+    public RecetaDetalle(double cantidadReceta, double precioCorrespondiente, Ingredientes idIngrediente, Receta idReceta) {
         this.cantidadReceta = cantidadReceta;
         this.precioCorrespondiente = precioCorrespondiente;
+        this.idIngrediente = idIngrediente;
+        this.idReceta = idReceta;
     }
 
     public Integer getId() {
@@ -126,5 +127,5 @@ public class RecetaDetalle implements Serializable {
     public String toString() {
         return "logica.RecetaDetalle[ id=" + id + " ]";
     }
-    
+
 }

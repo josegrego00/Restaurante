@@ -9,18 +9,17 @@ import persistencia.ControladoraPersistencia;
 
 public class ControladoraLogica {
 
-    private ControladoraPersistencia controladoraPersistencia=null;
-    private Ingredientes ingredientes=null;
-    private UnidadMedida unidadMedida=null;
-    private StockIngredientes stockIngredientes=null;
-    private Receta receta=null;
+    private ControladoraPersistencia controladoraPersistencia = null;
+    private Ingredientes ingredientes = null;
+    private UnidadMedida unidadMedida = null;
+    private StockIngredientes stockIngredientes = null;
+    private Receta receta = null;
 
     public ControladoraLogica() {
-        controladoraPersistencia= new ControladoraPersistencia();
-        
+        controladoraPersistencia = new ControladoraPersistencia();
+
     }
-    
-    
+
     public void crearIngredinete(Ingredientes i) {
 
     }
@@ -30,12 +29,12 @@ public class ControladoraLogica {
     }
 
     public void crearIngredinete(String nombreIngrediente, String precioIngrediente, String unidadMedida, String cantidadInicial) {
-        stockIngredientes= new StockIngredientes();
-        ingredientes= new Ingredientes();
+        stockIngredientes = new StockIngredientes();
+        ingredientes = new Ingredientes();
         ingredientes.setNombre(nombreIngrediente);
         ingredientes.setPrecio(Double.parseDouble(precioIngrediente));
-        for(UnidadMedida um:traerUnidadesMedidas()){
-            if(um.getNombre().equals(unidadMedida)){
+        for (UnidadMedida um : traerUnidadesMedidas()) {
+            if (um.getNombre().equals(unidadMedida)) {
                 ingredientes.setIdUnidadMedida(um);
                 break;
             }
@@ -44,7 +43,7 @@ public class ControladoraLogica {
         stockIngredientes.setCantidadExistente(Double.parseDouble(cantidadInicial));
         stockIngredientes.setIdIngrediente(ingredientes);
         controladoraPersistencia.llenarInventarioInicial(stockIngredientes);
-        
+
     }
 
     public List<Ingredientes> traerIngredientes() {
@@ -56,12 +55,37 @@ public class ControladoraLogica {
     }
 
     public void crearReceta(String nombreReceta) {
-        receta= new Receta();
+        receta = new Receta();
         receta.setNombreReceta(nombreReceta);
-        
+
         controladoraPersistencia.crearReceta(receta);
     }
 
-    
+    public Ingredientes traerIngrediente(String ingrediente) {
+        for (Ingredientes ingredientes : controladoraPersistencia.traerIngredientes()) {
+            if (ingredientes.getNombre().equals(ingrediente)) {
+                return ingredientes;
+            }
+        }
+        return null;
+    }
+
+    public Receta traerReceta(String nombreReceta) {
+        for (Receta receta : controladoraPersistencia.traerRecetas()) {
+            if (receta.getNombreReceta().equals(nombreReceta)) {
+                return receta;
+            }
+        }
+        return null;
+    }
+
+    public void crearDetalleReceta(double Cantidad, double costoCorrespondiente, Ingredientes ingrediente, Receta receta) {
+        RecetaDetalle recetaDetalle= new RecetaDetalle();
+        recetaDetalle.setCantidadReceta(Cantidad);
+        recetaDetalle.setPrecioCorrespondiente(costoCorrespondiente);
+        recetaDetalle.setIdIngrediente(ingrediente);
+        recetaDetalle.setIdReceta(receta);
+        controladoraPersistencia.crearDetalleReceta(recetaDetalle);
+    }
 
 }

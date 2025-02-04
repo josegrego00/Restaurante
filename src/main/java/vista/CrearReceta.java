@@ -323,21 +323,27 @@ public class CrearReceta extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNombreRecetaFocusGained
 
     private void btnGuardarRecetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarRecetaActionPerformed
+
         if (tablaIngredientesReceta.getRowCount() > 0) {
-            listaRecetaDetalle = new ArrayList<>();
-            RecetaDetalle detalle = new RecetaDetalle();
+
+            controladoraLogica.crearReceta(txtNombreReceta.getText());
+            Receta receta = controladoraLogica.traerReceta(txtNombreReceta.getText());
 
             for (int i = 0; i < tablaIngredientesReceta.getRowCount(); i++) {
-                listaRecetaDetalle.add(new RecetaDetalle().setIdIngrediente());
-                int edad = (int) table.getValueAt(i, 1);
-                String ciudad = (String) table.getValueAt(i, 2);
-                personas.add(new Persona(nombre, edad, ciudad));
+
+                Ingredientes ingrediente = controladoraLogica.traerIngrediente(tablaIngredientesReceta.getValueAt(i, 0).toString());
+                controladoraLogica.crearDetalleReceta(
+                        (double) tablaIngredientesReceta.getValueAt(i, 1),
+                        (double) tablaIngredientesReceta.getValueAt(i, 3),
+                        ingrediente,
+                        receta);
+
             }
-            controladoraLogica.crearReceta(txtNombreReceta.getText());
+            JOptionPane.showMessageDialog(null, "Se Creo la Receta con Exito");
         } else {
             JOptionPane.showMessageDialog(null, "No hay nada que guardar");
         }
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_btnGuardarRecetaActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
