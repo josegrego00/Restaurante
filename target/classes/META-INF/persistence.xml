@@ -12,6 +12,8 @@
     <class>logica.Producto</class>
     <class>logica.ComboDetalle</class>
     <class>logica.UnidadMedida</class>
+    <class>logica.DetalleFactura</class>
+    <class>logica.Factura</class>
     <properties>
       <!-- Configuración de conexión a MySQL -->
       <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>

@@ -7,12 +7,13 @@ package com.mycompany.restaurante;
 import vista.CrearIngrediente;
 import vista.CrearProducto;
 import vista.CrearReceta;
+import vista.VistaFacturaProductos;
 
 public class Restaurante {
 
     public static void main(String[] args) {
-        CrearProducto cp= new CrearProducto();
-        cp.setVisible(true);
-        cp.setLocationRelativeTo(null);
+        VistaFacturaProductos vfp= new VistaFacturaProductos();
+        vfp.setVisible(true);
+        vfp.setLocationRelativeTo(null);
     }
 }
