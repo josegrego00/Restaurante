@@ -8,12 +8,14 @@ import java.util.List;
 import persistencia.ControladoraPersistencia;
 
 public class ControladoraLogica {
-
+    
+    
     private ControladoraPersistencia controladoraPersistencia = null;
     private Ingredientes ingredientes = null;
     private UnidadMedida unidadMedida = null;
     private StockIngredientes stockIngredientes = null;
     private Receta receta = null;
+    private Producto producto=null;
 
     public ControladoraLogica() {
         controladoraPersistencia = new ControladoraPersistencia();
@@ -86,6 +88,21 @@ public class ControladoraLogica {
         recetaDetalle.setIdIngrediente(ingrediente);
         recetaDetalle.setIdReceta(receta);
         controladoraPersistencia.crearDetalleReceta(recetaDetalle);
+    }
+
+    public List<Producto> traerProductos() {
+            return controladoraPersistencia.traerProductos();
+    }
+
+    public void crearProducto(String nombreProducto, String tipoProducto, Receta receta, double precio) {
+        producto= new Producto();
+        producto.setNombreProducto(nombreProducto);
+        producto.setTipoProducto(tipoProducto);
+        if(receta!=null){
+        producto.setIdReceta(receta.getId());
+        }
+        producto.setPrecio(precio);
+        controladoraPersistencia.crearProducto(producto);
     }
 
 }

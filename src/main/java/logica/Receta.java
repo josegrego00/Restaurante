@@ -100,7 +100,7 @@ public class Receta implements Serializable {
 
     @Override
     public String toString() {
-        return "logica.Receta[ id=" + id + " ]";
+        return getNombreReceta();
     }
     
 }
