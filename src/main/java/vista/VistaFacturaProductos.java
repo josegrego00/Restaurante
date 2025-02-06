@@ -4,13 +4,17 @@
  */
 package vista;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import logica.ControladoraLogica;
+import logica.Factura;
 import logica.Producto;
 
 public class VistaFacturaProductos extends javax.swing.JFrame {
@@ -25,6 +29,7 @@ public class VistaFacturaProductos extends javax.swing.JFrame {
     public VistaFacturaProductos() {
         controladoraLogica = new ControladoraLogica();
         initComponents();
+        spCantidad.setValue(1);
     }
 
     @SuppressWarnings("unchecked")
@@ -60,7 +65,6 @@ public class VistaFacturaProductos extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         btnEliminar = new javax.swing.JButton();
-        btnModificar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
         txtTotalPagar = new javax.swing.JTextField();
         btnGrabarFactura = new javax.swing.JButton();
@@ -248,38 +252,51 @@ public class VistaFacturaProductos extends javax.swing.JFrame {
         jPanel5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         btnEliminar.setText("Eliminar");
-
-        btnModificar.setText("Modificar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         btnLimpiar.setText("Limpiar");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(19, Short.MAX_VALUE)
+                .addContainerGap(24, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnEliminar)
-                    .addComponent(btnModificar)
                     .addComponent(btnLimpiar))
                 .addGap(24, 24, 24))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(35, Short.MAX_VALUE)
                 .addComponent(btnEliminar)
-                .addGap(18, 18, 18)
-                .addComponent(btnModificar)
-                .addGap(18, 18, 18)
+                .addGap(31, 31, 31)
                 .addComponent(btnLimpiar)
                 .addGap(33, 33, 33))
         );
 
         txtTotalPagar.setEditable(false);
+        txtTotalPagar.setFont(new java.awt.Font("Liberation Sans", 0, 36)); // NOI18N
+        txtTotalPagar.setBorder(null);
+        txtTotalPagar.setInheritsPopupMenu(true);
 
         btnGrabarFactura.setText("Grabar Factura");
+        btnGrabarFactura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGrabarFacturaActionPerformed(evt);
+            }
+        });
 
         tablaDetalleProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -305,7 +322,7 @@ public class VistaFacturaProductos extends javax.swing.JFrame {
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(104, 104, 104)
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -316,18 +333,18 @@ public class VistaFacturaProductos extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(6, 6, 6)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(txtTotalPagar, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 612, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(txtTotalPagar, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGap(38, 38, 38)
-                                .addComponent(btnGrabarFactura)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel8)
-                                .addGap(34, 34, 34)))
-                        .addGap(0, 35, Short.MAX_VALUE))))
+                                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(0, 35, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addComponent(btnGrabarFactura)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel8)
+                        .addGap(115, 115, 115))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -361,7 +378,7 @@ public class VistaFacturaProductos extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 6, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -369,7 +386,7 @@ public class VistaFacturaProductos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        txtNFactura.setText(traerNFactura());
+        txtNFactura.setText(String.valueOf(traerNFactura()));
         txtFechaFactura.setText(fechaActual());
         listaProductos = controladoraLogica.traerProductos();
 
@@ -385,9 +402,9 @@ public class VistaFacturaProductos extends javax.swing.JFrame {
     private void txtCodigoProductoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodigoProductoFocusLost
 
         int valor = Integer.parseInt(txtCodigoProducto.getText());
-        if (controladoraLogica.traerProducto(valor)!= null) {
-            System.out.println(valor);
-            cbProductos.setSelectedIndex(valor-1);
+        if (controladoraLogica.traerProducto(valor) != null) {
+            
+            cbProductos.setSelectedIndex(valor - 1);
             obtenerPrecio();
         } else {
             JOptionPane.showMessageDialog(null, "No se encontro ese Producto");
@@ -402,6 +419,52 @@ public class VistaFacturaProductos extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         agregarProducto();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        eliminarProducto();
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        limpiar();
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void btnGrabarFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGrabarFacturaActionPerformed
+        if (tablaDetalleProductos.getRowCount() > 0) {
+            controladoraLogica.crearFactura(
+                    LocalDateTime.now(),
+                    Double.parseDouble(txtTotalPagar.getText()));
+
+            Factura factura = controladoraLogica.traerFactura(Integer.parseInt(txtNFactura.getText()));
+
+            for (int i = 0; i < tablaDetalleProductos.getRowCount(); i++) {
+                Producto producto = controladoraLogica.traerProducto(Integer.parseInt(tablaDetalleProductos.getValueAt(i, 0).toString()));
+                controladoraLogica.crearDetalleFactura(
+                        factura,
+                        producto,
+                        Double.parseDouble(tablaDetalleProductos.getValueAt(i, 2).toString()),
+                        Double.parseDouble(tablaDetalleProductos.getValueAt(i, 4).toString())
+                );
+            }
+            JOptionPane.showMessageDialog(null, "Se Guardo la Factura");
+            limpiar();
+            txtNFactura.setText(String.valueOf(traerNFactura()));
+            txtFechaFactura.setText(String.valueOf(fechaActual()));
+        } else {
+            JOptionPane.showMessageDialog(null, "No hay nada que Guardar.");
+        }
+    }//GEN-LAST:event_btnGrabarFacturaActionPerformed
+    private void limpiar() {
+        txtNombreCliente.setText("");
+        txtDireccionCliente.setText("");
+        txtTelefonoCliente.setText("");
+        txtNitCliente.setText("");
+        txtPrecio.setText("");
+        spCantidad.setValue(1);
+        cbProductos.setSelectedIndex(0);
+        modeloTabla.setRowCount(0);
+        txtTotalPagar.setText("0.00");
+        JOptionPane.showMessageDialog(null, "La factura ha sido limpiada correctamente.");
+    }
 
     private void obtenerPrecio() {
         nombreProducto = String.valueOf(cbProductos.getSelectedItem());
@@ -418,7 +481,6 @@ public class VistaFacturaProductos extends javax.swing.JFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGrabarFactura;
     private javax.swing.JButton btnLimpiar;
-    private javax.swing.JButton btnModificar;
     private javax.swing.JComboBox<String> cbProductos;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
@@ -452,7 +514,7 @@ public class VistaFacturaProductos extends javax.swing.JFrame {
     private javax.swing.JTextField txtTotalPagar;
     // End of variables declaration//GEN-END:variables
 
-    private String traerNFactura() {
+    private int traerNFactura() {
         return controladoraLogica.traerUltimaFactura();
     }
 
@@ -472,6 +534,35 @@ public class VistaFacturaProductos extends javax.swing.JFrame {
         String[] informacion = {"Id", "Producto", "Cantidad", "Costo", "Costo Total"};
         modeloTabla.setColumnIdentifiers(informacion);
         tablaDetalleProductos.setModel(modeloTabla);
+
+        //evento para ver cuando se ingresen coss a la tabla
+        modeloTabla.addTableModelListener(new TableModelListener() {
+            @Override
+            public void tableChanged(TableModelEvent tme) {
+                if (tme.getType() == TableModelEvent.INSERT || tme.getType() == TableModelEvent.INSERT) {
+                    calcularTotalPagar();
+                }
+
+            }
+
+        });
+
+    }
+
+    private void calcularTotalPagar() {
+        double total = 0.0;
+        for (int i = 0; i < modeloTabla.getRowCount(); i++) {
+            Object valor = modeloTabla.getValueAt(i, 4);
+            if (valor != null) {
+                try {
+                    total += Double.parseDouble(valor.toString());
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "Error al calcular el total: Valor inválido en la fila " + (i + 1));
+                    return;
+                }
+            }
+        }
+        txtTotalPagar.setText(String.format("%.2f", total));
     }
 
     private void agregarProducto() {
@@ -491,8 +582,28 @@ public class VistaFacturaProductos extends javax.swing.JFrame {
 
             }
             modeloTabla.addRow(tablaDatos);
+
         }
 
+    }
+
+    private void eliminarProducto() {
+        int filaSeleccionada = tablaDetalleProductos.getSelectedRow();
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(null, "Por favor, seleccione una fila para eliminar.");
+            return;
+        }
+        // Confirmar la eliminación con el usuario
+        int confirmacion = JOptionPane.showConfirmDialog(
+                null,
+                "¿Está seguro de que desea eliminar el producto seleccionado?",
+                "Confirmar Eliminación",
+                JOptionPane.YES_NO_OPTION
+        );
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            modeloTabla.removeRow(filaSeleccionada);
+            calcularTotalPagar();
+        }
     }
 
 }

@@ -4,6 +4,9 @@
  */
 package logica;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import persistencia.ControladoraPersistencia;
 
@@ -104,19 +107,41 @@ public class ControladoraLogica {
         controladoraPersistencia.crearProducto(producto);
     }
 
-    public String traerUltimaFactura() {
+    public int traerUltimaFactura() {
         List<Factura> listaFacturas = controladoraPersistencia.traerFacturas();
         if (!listaFacturas.isEmpty()) {
             Factura nFactura = listaFacturas.get(listaFacturas.size() - 1);
-            return "" + nFactura.getId() + 1;
-        } else {
-            return "No hay Factura";
+            return (nFactura.getId() + 1);
         }
-
+        return 0;
     }
 
     public Producto traerProducto(int valor) {
-       return controladoraPersistencia.traerProducto(valor);
+        return controladoraPersistencia.traerProducto(valor);
+    }
+
+    public void crearFactura(LocalDateTime fecha, double totaFactura) {
+        Factura factura = new Factura();
+        factura.setFechaFactura(convertToDate(fecha));
+        factura.setTotalFactura(totaFactura);
+        controladoraPersistencia.crearFactura(factura);
+    }
+
+    public static Date convertToDate(LocalDateTime localDateTime) {
+        return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+    }
+
+    public Factura traerFactura(int idFactura) {
+        return controladoraPersistencia.traerFactura(idFactura);
+    }
+
+    public void crearDetalleFactura(Factura factura, Producto producto, double cantidadComprada, double totalCompra) {
+        DetalleFactura detalleFactura= new DetalleFactura();
+        detalleFactura.setIdFactura(factura.getId());
+        detalleFactura.setIdProducto(producto.getId());
+        detalleFactura.setCantidad((int) cantidadComprada);
+        detalleFactura.setPrecioTotal(totalCompra);
+        controladoraPersistencia.crearDetalleFactura(detalleFactura);
     }
 
 }

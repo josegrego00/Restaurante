@@ -5,6 +5,7 @@
 package logica;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -39,7 +40,7 @@ public class Factura implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @Column(name = "FECHA_FACTURA")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date fechaFactura;
     @Basic(optional = false)
     @Column(name = "TOTAL_FACTURA")
