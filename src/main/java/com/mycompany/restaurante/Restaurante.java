@@ -12,6 +12,9 @@ import vista.VistaFacturaProductos;
 public class Restaurante {
 
     public static void main(String[] args) {
+      /*  CrearReceta cr= new CrearReceta();
+        cr.setVisible(true);
+        cr.setLocationRelativeTo(null);*/
         VistaFacturaProductos vfp= new VistaFacturaProductos();
         vfp.setVisible(true);
         vfp.setLocationRelativeTo(null);

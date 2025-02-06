@@ -2,6 +2,7 @@ package persistencia;
 
 import com.mysql.cj.conf.PropertyKey;
 import java.util.List;
+import logica.Factura;
 import logica.Ingredientes;
 import logica.Producto;
 import logica.Receta;
@@ -17,6 +18,7 @@ public class ControladoraPersistencia {
     private RecetaJpaController recetaJpaController=null;
     private RecetaDetalleJpaController recetaDetalleJpaController=null;
     private ProductoJpaController productoJpaController=null;
+    private FacturaJpaController facturaJpaController=null;
     
     public ControladoraPersistencia() {
         unidadMedidaJpaController = new UnidadMedidaJpaController();
@@ -25,6 +27,7 @@ public class ControladoraPersistencia {
         recetaJpaController= new RecetaJpaController();
         recetaDetalleJpaController = new RecetaDetalleJpaController();
         productoJpaController = new ProductoJpaController();
+        facturaJpaController= new FacturaJpaController();
     }
 
     public void crearIngrediente(Ingredientes ingrediente) {
@@ -62,6 +65,14 @@ public class ControladoraPersistencia {
 
     public void crearProducto(Producto producto) {
         productoJpaController.create(producto);
+    }
+
+    public List<Factura> traerFacturas() {
+            return facturaJpaController.findFacturaEntities();
+    }
+
+    public Producto traerProducto(int valor) {
+        return productoJpaController.findProducto(valor);
     }
 
 }

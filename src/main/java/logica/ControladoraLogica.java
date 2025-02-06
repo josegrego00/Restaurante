@@ -8,14 +8,13 @@ import java.util.List;
 import persistencia.ControladoraPersistencia;
 
 public class ControladoraLogica {
-    
-    
+
     private ControladoraPersistencia controladoraPersistencia = null;
     private Ingredientes ingredientes = null;
     private UnidadMedida unidadMedida = null;
     private StockIngredientes stockIngredientes = null;
     private Receta receta = null;
-    private Producto producto=null;
+    private Producto producto = null;
 
     public ControladoraLogica() {
         controladoraPersistencia = new ControladoraPersistencia();
@@ -82,7 +81,7 @@ public class ControladoraLogica {
     }
 
     public void crearDetalleReceta(double Cantidad, double costoCorrespondiente, Ingredientes ingrediente, Receta receta) {
-        RecetaDetalle recetaDetalle= new RecetaDetalle();
+        RecetaDetalle recetaDetalle = new RecetaDetalle();
         recetaDetalle.setCantidadReceta(Cantidad);
         recetaDetalle.setPrecioCorrespondiente(costoCorrespondiente);
         recetaDetalle.setIdIngrediente(ingrediente);
@@ -91,18 +90,33 @@ public class ControladoraLogica {
     }
 
     public List<Producto> traerProductos() {
-            return controladoraPersistencia.traerProductos();
+        return controladoraPersistencia.traerProductos();
     }
 
     public void crearProducto(String nombreProducto, String tipoProducto, Receta receta, double precio) {
-        producto= new Producto();
+        producto = new Producto();
         producto.setNombreProducto(nombreProducto);
         producto.setTipoProducto(tipoProducto);
-        if(receta!=null){
-        producto.setIdReceta(receta.getId());
+        if (receta != null) {
+            producto.setIdReceta(receta.getId());
         }
         producto.setPrecio(precio);
         controladoraPersistencia.crearProducto(producto);
+    }
+
+    public String traerUltimaFactura() {
+        List<Factura> listaFacturas = controladoraPersistencia.traerFacturas();
+        if (!listaFacturas.isEmpty()) {
+            Factura nFactura = listaFacturas.get(listaFacturas.size() - 1);
+            return "" + nFactura.getId() + 1;
+        } else {
+            return "No hay Factura";
+        }
+
+    }
+
+    public Producto traerProducto(int valor) {
+       return controladoraPersistencia.traerProducto(valor);
     }
 
 }

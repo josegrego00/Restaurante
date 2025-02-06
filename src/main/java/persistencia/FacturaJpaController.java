@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import logica.Factura;
@@ -25,6 +26,10 @@ public class FacturaJpaController implements Serializable {
         this.emf = emf;
     }
     private EntityManagerFactory emf = null;
+
+    public FacturaJpaController() {
+        this.emf=Persistence.createEntityManagerFactory("persistenciaPU");
+    }
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
