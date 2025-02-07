@@ -4,6 +4,7 @@
 
 package com.mycompany.restaurante;
 
+import vista.ComprarIngredientes;
 import vista.CrearIngrediente;
 import vista.CrearProducto;
 import vista.CrearReceta;
@@ -15,8 +16,12 @@ public class Restaurante {
       /*  CrearReceta cr= new CrearReceta();
         cr.setVisible(true);
         cr.setLocationRelativeTo(null);*/
-        VistaFacturaProductos vfp= new VistaFacturaProductos();
+     /*   VistaFacturaProductos vfp= new VistaFacturaProductos();
         vfp.setVisible(true);
-        vfp.setLocationRelativeTo(null);
+        vfp.setLocationRelativeTo(null);*/
+        ComprarIngredientes ci= new ComprarIngredientes();
+        ci.setVisible(true);
+        ci.setLocationRelativeTo(null);
+     
     }
 }
